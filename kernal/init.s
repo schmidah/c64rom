@@ -148,9 +148,9 @@ ioinit	lda #$7f        ;kill interrupts
 ;
 ; set up the 6510 lines
 ;
-	lda #%11100111  ;motor on, hiram lowram charen high
+	lda #(%11000000|CASS_MOT|LORAM|HIRAM|CHAREN)  ;motor on, hiram lowram charen high
 	sta r6510
-	lda #%00101111  ;mtr out,sw in,wr out,control out
+	lda #(CASS_MOT|CASS_WRT|LORAM|HIRAM|CHAREN)  ;mtr out,sw in,wr out,control out
 	sta d6510
 ;
 ;jsr clkhi ;clkhi to release serial devices  ^

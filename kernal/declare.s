@@ -1,6 +1,14 @@
 	;declare 6510 ports
 d6510	= 0              ;6510 data direction register
 r6510	= 1              ;6510 data register
+	;* LABELLING BITS - START
+CASS_MOT= (1<<5)		;Out
+CASS_SEN= (1<<4)		;In
+CASS_WRT= (1<<3)		;Out
+LORAM	= (1<<0)		;Out
+HIRAM	= (1<<1)		;Out
+CHAREN	= (1<<2)		;Out
+	;* LABELLING BITS -   END
 
 	.segment "ZPKERNAL" : zeropage
 status	.res 1           ;i/o operation status byte

@@ -17,9 +17,9 @@ wrtx	sta d1t2l
 	lda #$19        ;enable timer (one-shot)
 	sta d1crb
 	lda r6510       ;toggle write bit
-	eor #$08
+	eor #(CASS_WRT)
 	sta r6510
-	and #$08        ;leave only write bit
+	and #(CASS_WRT)        ;leave only write bit
 	rts
 ;
 wrtl3	sec             ;flag prp for end of block
@@ -167,7 +167,7 @@ bsiv	lda bsit-8,x    ;move irq vectors, table to indirect
 	rts
 ;
 tnof	lda r6510       ;turn off cassette motor
-	ora #$20        ;
+	ora #(CASS_MOT)        ;
 	sta r6510
 	rts
 

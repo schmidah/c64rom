@@ -236,21 +236,21 @@ key5	eor #$80        ;blink it
 	jsr dspp2       ;display it
 ;
 key4	lda r6510       ;get cassette switches
-	and #$10        ;is switch down ?
+	and #(CASS_SEN)        ;is switch down ?
 	beq key3        ;branch if so
 ;
 	ldy #0
 	sty cas1        ;cassette off switch
 ;
 	lda r6510
-	ora #$20
+	ora #(CASS_MOT)
 	bne kl24        ;branch if motor is off
 ;
 key3	lda cas1
 	bne kl2
 ;
 	lda r6510
-	and #%011111    ;turn motor on
+	and #(CASS_SEN|CASS_WRT|CHAREN|HIRAM|LORAM)    ;turn motor on
 ;
 kl24
 	sta r6510

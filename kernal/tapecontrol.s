@@ -18,7 +18,7 @@ cs40	jsr tstop       ;watch for stop key
 
 ;subr returns <> for cassette switch
 ;
-cs10	lda #$10        ;check port
+cs10	lda #(CASS_SEN)        ;check port
 	bit r6510       ;closed?...
 	bne cs25        ;no. . .
 	bit r6510       ;check again to debounce
@@ -95,7 +95,7 @@ tape	ldy #$7f        ;kill unwanted irq's
 	sta fsblk
 	jsr newch       ;prep local counters and flags
 	lda r6510       ;turn motor on
-	and #%011111    ;low turns on
+	and #(CASS_SEN|CASS_WRT|CHAREN|HIRAM|LORAM)    ;low turns on
 	sta r6510
 	sta cas1        ;flag internal control of cass motor
 	ldx #$ff        ;delay between blocks
