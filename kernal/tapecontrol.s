@@ -66,7 +66,7 @@ twrt	lda #20         ;between block shorts
 twrt2	jsr cste2       ;say 'press play & record'
 twrt3	bcs stop3       ;stop key pressed
 	sei
-	lda #$82        ;enable t2 irqs...write time
+	lda #(CIAICR_SnC|CIAICR_TB)	;enable t2 irqs...write time
 	ldx #8          ;vector irq to wrtz
 
 ;start tape operation entry point
@@ -75,9 +75,9 @@ tape	ldy #$7f        ;kill unwanted irq's
 	sty d1icr
 	sta d1icr       ;turn on wanted
 	lda d1cra       ;calc timer enables
-	ora #$19
+	ora #(CIACRA_LOAD|CIACRA_RNMOD|CIACRA_START)
 	sta d1crb       ;turn on t2 irq's for cass write(one shot)
-	and #$91        ;save tod 50/60 indication
+	and #(CIACRA_TODIN|CIACRA_LOAD|CIACRA_START)	;save tod 50/60 indication
 	sta caston      ;place in auto mode for t1
 ; wait for rs-232 to finish
 	jsr rsp232
@@ -166,7 +166,7 @@ stt3	lda d1t2l       ;watch out for d1t2h rollover...
 	sta d1cra
 	sta stupid      ;non-zero means an t1 irq has not occured yet
 	lda d1icr       ;clear old t1 interrupt
-	and #$10        ;check for old-flag irq
+	and #(CIAICR_FLG)	;check for old-flag irq
 	beq stt4        ;no...normal exit
 	lda #>stt4      ;push simulated return address on stack
 	pha

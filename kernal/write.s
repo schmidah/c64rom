@@ -14,7 +14,7 @@ wrt1	ldx #0          ;set and store time
 wrtx	sta d1t2l
 	stx d1t2h
 	lda d1icr       ;clear irq
-	lda #$19        ;enable timer (one-shot)
+	lda #(CIACRB_LOAD|CIACRB_RNMOD|CIACRB_START)	;enable timer (one-shot)
 	sta d1crb
 	lda r6510       ;toggle write bit
 	eor #(CASS_WRT)

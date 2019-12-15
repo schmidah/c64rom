@@ -32,10 +32,10 @@ p0010	lda vicreg+18   ;check raster compare for zero
 ;
 ; piokey - add universal to iokeys
 ;
-piokey	lda #$81        ;enable t1 irq's
+piokey	lda #(CIAICR_SnC|CIAICR_TA)        ;enable t1 irq's
 	sta d1icr
 	lda d1cra
-	and #$80        ;save only tod bit
-	ora #%00010001  ;enable timer1
+	and #(CIACRA_TODIN)        ;save only tod bit
+	ora #(CIACRA_LOAD|CIACRA_START)  ;enable timer1
 	sta d1cra
 	jmp clklo       ;release the clock line***901227-03***

@@ -229,9 +229,35 @@ d1tods	=cia1+9
 d1todm	=cia1+10
 d1todh	=cia1+11
 d1sdr	=cia1+12
+
 d1icr	=cia1+13
+CIAICR_IR	=(1<<7)
+CIAICR_SnC	=(1<<7)
+CIAICR_FLG	=(1<<4)
+CIAICR_SP	=(1<<3)
+CIAICR_ALRM	=(1<<2)
+CIAICR_TB	=(1<<1)
+CIAICR_TA	=(1<<0)
+
 d1cra	=cia1+14
+CIACRA_TODIN=(1<<7)
+CIACRA_SPMOD=(1<<6)
+CIACRA_INMOD=(1<<5)
+CIACRA_LOAD	=(1<<4)
+CIACRA_RNMOD=(1<<3)
+CIACRA_OMOD	=(1<<2)
+CIACRA_PBON =(1<<1)
+CIACRA_START=(1<<0)
+
 d1crb	=cia1+15
+CIACRB_ALARM=(1<<7)
+CIACRB_INMD1=(1<<6)
+CIACRB_INMD2=(1<<5)
+CIACRB_LOAD	=(1<<4)
+CIACRB_RNMOD=(1<<3)
+CIACRB_OMOD	=(1<<2)
+CIACRB_PBON =(1<<1)
+CIACRB_START=(1<<0)
 
 cia2	=$dd00                  ;device2 6526 (page2 nmi)
 d2pra	=cia2+0
@@ -251,7 +277,7 @@ d2icr	=cia2+13
 d2cra	=cia2+14
 d2crb	=cia2+15
 
-timrb	=$19            ;6526 crb enable one-shot tb
+timrb	=(CIACRB_LOAD|CIACRB_RNMOD|CIACRB_START)	;6526 crb enable one-shot tb
 
 ;tape block types
 ;

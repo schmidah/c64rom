@@ -201,7 +201,7 @@ eoiacp
 	jsr datahi      ;data line high (makes timming more like vic-20
 	lda d1icr       ;clear the timer flags<<<<<<<<<<<<
 acp00	lda d1icr
-	and #$02        ;check the timer
+	and #(CIAICR_TB);check the timer
 	bne acp00b      ;ran out.....
 	jsr debpia      ;check the clock line
 	bmi acp00       ;no not yet

@@ -40,7 +40,7 @@ read	ldx d1t2h       ;get time since last interrupt
 	tax
 	sty d1t2l       ;reload timer2 (count down from $ffff)
 	sty d1t2h
-	lda #$19        ;enable timer
+	lda #(CIACRB_LOAD|CIACRB_RNMOD|CIACRB_START)	;enable timer
 	sta d1crb
 	lda d1icr       ;clear read interrupt
 	sta kika26      ;save for latter
@@ -177,7 +177,7 @@ rad2x	lsr temp        ;adjust timeout for...
 	sta rer         ;flag data as error
 	lda #0          ;kill 16 sync flag
 	sta syno
-	lda #$81        ;set up for timer1 interrupts
+	lda #(CIAICR_SnC|CIAICR_TA)	;set up for timer1 interrupts
 	sta d1icr
 	sta snsw1       ;flag that we have byte syncronized
 ;
@@ -186,7 +186,7 @@ radq2	lda syno        ;save syno status
 	beq radk        ;no block sync, no byte looking
 	lda #0          ;turn off byte sync switch
 	sta snsw1
-	lda #$01        ;disable timer1 interrupts
+	lda #(CIAICR_TA)	;disable timer1 interrupts
 	sta d1icr
 radk	lda mych        ;pass character to byte routine
 	sta ochar
@@ -354,7 +354,7 @@ rd161	sta rdflg
 ; modify for c64 6526's
 ;
 	sei             ;protect clearing of t1 information
-	ldx #$01
+	ldx #(CIAICR_TA)
 	stx d1icr       ;clear t1 enable...
 	ldx d1icr       ;clear the interrupt
 	ldx fsblk       ;dec fsblk for next pass...
