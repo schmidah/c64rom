@@ -38,7 +38,7 @@ nnmi20	tya             ;.y saved through restore
 ;
 ; t1 nmi check - transmitt a bit
 ;
-	and #$01        ;check for t1
+	and #(CIAICR_TA);check for t1
 	beq nnmi30      ;no...
 ;
 	lda d2pra
@@ -53,9 +53,9 @@ nnmi20	tya             ;.y saved through restore
 ;  handle another nmi as a subroutine
 ;
 	txa             ;test for another nmi
-	and #$12        ;test for t2 or flag
+	and #(CIAICR_FLG|CIAICR_TB)	;test for t2 or flag
 	beq nnmi25
-	and #$02        ;check for t2
+	and #(CIAICR_TB)	;check for t2
 	beq nnmi22      ;must be a flag
 ;
 	jsr t2nmi       ;handle a normal bit in...
@@ -70,7 +70,7 @@ nnmi25	jsr rstrab      ;go calc info (code could be in line)
 ; t2 nmi check - recieve a bit
 ;
 nnmi30	txa
-	and #$02        ;mask to t2
+	and #(CIAICR_TB)	;mask to t2
 	beq nnmi40      ;no...
 ;
 	jsr t2nmi       ;handle interrupt
@@ -79,7 +79,7 @@ nnmi30	txa
 ; flag nmi handler - recieve a start bit
 ;
 nnmi40	txa             ;check for edge
-	and #$10        ;on flag...
+	and #(CIAICR_FLG)	;on flag...
 	beq nmirti      ;no...
 ;
 	jsr flnmi       ;start bit routine
@@ -131,7 +131,7 @@ t2nmi	lda d2prb       ;get data in
 	adc baudof+1
 	sta d2t2h
 ;
-	lda #$11        ;enable timer
+	lda #(CIACRB_LOAD|CIACRB_START)	;enable timer
 	sta d2crb
 ;
 	lda enabl       ;restore nmi's early...

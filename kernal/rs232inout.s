@@ -168,9 +168,9 @@ rsp232	pha             ;save .a
 	lda enabl       ;does rs232 have any enables?
 	beq rspok       ;no...
 rspoff	lda enabl       ;wait untill done
-	and #%00000011  ; with t1 & t2
+	and #(CIAICR_TB|CIAICR_TA)	; with t1 & t2
 	bne rspoff
-	lda #%00010000  ; disable flag (need to renable in user code)
+	lda #(CIAICR_FLG)  ; disable flag (need to renable in user code)
 	sta d2icr       ;turn of enabl************
 	lda #0
 	sta enabl       ;clear all enabls

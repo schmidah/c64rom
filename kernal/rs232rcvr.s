@@ -50,13 +50,13 @@ rsr020	lda inbit       ;get data...
 ;
 ; rsrabl - enable to recieve a byte
 ;
-rsrabl	lda #$90        ;enable flag for next byte
+rsrabl	lda #(CIAICR_SnC|CIAICR_FLG)	;enable flag for next byte
 	sta d2icr       ;toss bad/old nmi
 	ora enabl       ;mark in enable register***********
 	sta enabl       ;re-enabled by jmp oenabl
 	sta rinone      ;flag for start bit
 ;
-rsrsxt	lda #$02        ;disable t2
+rsrsxt	lda #(CIAICR_TB)        ;disable t2
 	jmp oenabl      ;flip-off enabl***************
 
 ; reciever start bit check

@@ -95,7 +95,7 @@ isrclk	jsr clkhi       ;clock hi
 	sta d1crb
 	lda d1icr       ;clear the timer flags<<<<<<<<<<<<<
 isr04	lda d1icr
-	and #$02
+	and #(CIAICR_TB)
 	bne frmerr
 	jsr debpia
 	bcs isr04

@@ -116,11 +116,11 @@ ctserr	lda #$10        ;cts gone error
 ;
 ; errors turn off t1
 ;
-rsodne	lda #$01        ;kill t1 nmi
+rsodne	lda #(CIAICR_TA)	;kill t1 nmi
 ;entry to turn off an enabled nmi...
 oenabl	sta d2icr       ;toss bad/old nmi
 	eor enabl       ;flip enable
-	ora #$80        ;enable good nmi's
+	ora #(CIAICR_SnC)	;enable good nmi's
 	sta enabl
 	sta d2icr
 	rts
