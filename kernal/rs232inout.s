@@ -72,16 +72,16 @@ bso100	lda enabl       ;check for a t1 nmi enable
 ;
 ; set up t1 nmi's
 ;
-bso110	lda #$10        ;turn off timer to prevent false start...
+bso110	lda #(CIACRA_LOAD)	;turn off timer to prevent false start...
 	sta d2cra
 	lda baudof      ;set up timer1
 	sta d2t1l
 	lda baudof+1
 	sta d2t1h
-	lda #$81
+	lda #(CIAICR_SnC|CIAICR_TA)
 	jsr oenabl
 	jsr rstbgn      ;set up to send (will stop on cts or dsr error)
-	lda #$11        ;turn on timer
+	lda #(CIACRA_LOAD|CIACRA_START)	;turn on timer
 	sta d2cra
 bso120	rts
 

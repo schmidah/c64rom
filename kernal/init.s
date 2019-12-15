@@ -129,7 +129,7 @@ ioinit	lda #$7f        ;kill interrupts
 	sta d1icr
 	sta d2icr
 	sta d1pra       ;turn on stop key
-	lda #%00001000  ;shut off timers
+	lda #(CIACRA_RNMOD)  ;shut off timers
 	sta d1cra
 	sta d2cra
 	sta d1crb

@@ -157,10 +157,10 @@ flnmi
 	lda m51ajb+1
 	sta d2t2h
 ;
-	lda #$11        ;enable timer
+	lda #(CIACRB_LOAD|CIACRB_START)        ;enable timer
 	sta d2crb
 ;
-	lda #$12        ;disable flag, enable t2
+	lda #(CIAICR_FLG|CIAICR_TB)        ;disable flag, enable t2
 	eor enabl
 	sta enabl
 ;ora #$82
