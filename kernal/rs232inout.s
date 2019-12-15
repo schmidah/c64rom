@@ -19,7 +19,7 @@ cko232	sta dflto       ;set default out
 ;  rts will be low if currently inputing
 ;
 cko020	lda enabl
-	and #$02        ;look at ier for t2
+	and #(CIAICR_TB)	;look at ier for t2
 	bne cko020      ;hang untill input done
 ;
 ; wait for cts to be off as spec reqs
@@ -134,7 +134,7 @@ cki080	lda #$90
 ;  see if we need to turn on flag
 ;
 cki100	lda enabl       ;check for flag or t2 active
-	and #$12
+	and #(CIAICR_FLG|CIAICR_TB)
 	beq cki080      ;no need to turn on
 cki110	clc             ;no error
 	rts
